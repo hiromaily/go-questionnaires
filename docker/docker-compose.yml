@@ -1,0 +1,54 @@
+#docker-compose.yml
+#- mysql:5.7
+#- web from DockerfileWeb (build is required)
+version: '2'
+services:
+  # MySQL
+  mysql:
+    image: mysql:5.7
+    container_name: question-mysql
+    ports:
+      - "4306:3306"
+    volumes:
+      - ./docker_build/mysql/conf:/etc/mysql/conf.d
+      - ./docker_build/mysql/db_data:/var/lib/mysql
+      - ./docker_build/mysql/init.d:/docker-entrypoint-initdb.d
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: questionnaire
+      MYSQL_USER: hiromaily
+      MYSQL_PASSWORD: 12345678
+  # golang:go-questionnaires
+  web:
+    build:
+      context: ./docker_build/web/
+    image: go-questionnaires:1.0
+    container_name: question-web
+    ports:
+      - "8880:8880"
+    volumes:
+      - ./docker_build/logs:/var/log/goweb
+      - ./:/go/src/github.com/hiromaily/go-questionnaires
+    links:
+      - mysql:mysql-server
+    depends_on:
+      - mysql
+    stdin_open: true
+    tty: true
+    restart: always
+    command: bash
+    #command: bash ./docker-entrypoint.sh
+  # Nginx
+  nginxs:
+    build:
+      context: ./docker_build/nginx/
+    image: nginxs:1.0
+    container_name: nginxs
+    ports:
+      - "8080:80"
+    links:
+      - web:go-server
+    depends_on:
+      - web
+    restart: always
