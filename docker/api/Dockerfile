@@ -3,7 +3,7 @@
 FROM golang:1.7
 
 RUN mkdir -p /go/src/github.com/hiromaily/go-questionnaires
-RUN mkdir /var/log/questionnaires/
+RUN mkdir /var/log/questionnaire/
 
 
 WORKDIR /go/src/github.com/hiromaily/go-gin-wrapper

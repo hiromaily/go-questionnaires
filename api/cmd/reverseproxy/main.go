@@ -17,7 +17,6 @@ func main() {
 
 	//url for API
 
-
 	//Run
 	router.Run()
 }
@@ -42,4 +41,3 @@ func ResultAction(c *gin.Context) {
 		"title": "Main website",
 	})
 }
-
