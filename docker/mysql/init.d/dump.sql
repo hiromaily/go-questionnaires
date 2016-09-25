@@ -36,6 +36,7 @@ DROP TABLE IF EXISTS `t_questionnaires`;
 CREATE TABLE `t_questionnaires` (
   `questionnaire_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'questionnaire ID',
   `title` varchar(20) COLLATE utf8_unicode_ci NOT NULL COMMENT 'title',
+  `questions` json DEFAULT NULL COMMENT 'questions by json data',
   `delete_flg` char(1) COLLATE utf8_unicode_ci DEFAULT '0' COMMENT 'delete flg',
   `created` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'created date',
   `updated` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'updated date',
@@ -47,14 +48,14 @@ CREATE TABLE `t_questionnaires` (
 
 LOCK TABLES `t_questionnaires` WRITE;
 /*!40000 ALTER TABLE `t_questionnaires` DISABLE KEYS */;
-INSERT INTO `t_questionnaires` VALUES (1,'title1','0','2016-09-24 21:43:15','2016-09-24 21:43:15'),(2,'title2','0','2016-09-24 21:43:15','2016-09-24 21:43:15'),(3,'title3','0','2016-09-24 21:43:15','2016-09-24 21:43:15');
+INSERT INTO `t_questionnaires` VALUES (1,'title1','["question1", "question2", "question3"]','0','2016-09-24 21:43:15','2016-09-24 21:43:15'),(2,'title2','["question2-1", "question2-2", "question2-3"]','0','2016-09-24 21:43:15','2016-09-24 21:43:15'),(3,'title3','["question3-1", "question3-2", "question3-3"]','0','2016-09-24 21:43:15','2016-09-24 21:43:15');
 /*!40000 ALTER TABLE `t_questionnaires` ENABLE KEYS */;
 UNLOCK TABLES;
 
 
 --
 -- Table structure for table `t_questions`
---
+-- TODO:it may be deleted
 
 DROP TABLE IF EXISTS `t_questions`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
@@ -102,7 +103,7 @@ CREATE TABLE `t_answers` (
 
 LOCK TABLES `t_answers` WRITE;
 /*!40000 ALTER TABLE `t_answers` DISABLE KEYS */;
-INSERT INTO `t_answers` VALUES (1,1,'abc@gmail.com', '{"answer": [{"order_no": 1, "answer": "answer1"},{"order_no": 2, "answer": "answer2"},{"order_no": 3, "answer": "answer3"}]}','0','2016-09-24 21:43:15','2016-09-24 21:43:15'),(2,1,'xxxx@gmail.com','{"answer": [{"order_no": 1, "answer": "answer--1"},{"order_no": 2, "answer": "answer--2"},{"order_no": 3, "answer": "answer--3"}]}','0','2016-09-24 21:43:15','2016-09-24 21:43:15');
+INSERT INTO `t_answers` VALUES (1,1,'abc@gmail.com', '["answer1", "answer2", "answer3"]','0','2016-09-24 21:43:15','2016-09-24 21:43:15'),(2,1,'xxxx@gmail.com','["aaaaa111", "bbbbb222", "ccccc333"]','0','2016-09-24 21:43:15','2016-09-24 21:43:15');
 /*!40000 ALTER TABLE `t_answers` ENABLE KEYS */;
 UNLOCK TABLES;
 

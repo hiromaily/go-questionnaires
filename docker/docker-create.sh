@@ -8,24 +8,28 @@
 ###############################################################################
 # Environment
 ###############################################################################
-CONTAINER_WEB=question-web
+#Container
+CONTAINER_API_SERVER=question-api
+CONTAINER_BACK_SERVER=question-backoffice
+CONTAINER_FRONT_SERVER=question-frontoffice
+
 CONTAINER_MYSQL=question-mysql
-IMAGE_NAME=go-questionnaires:1.0
+CONTAINER_NGINX=question-nginx
+
+#Image
+IMAGE_NAME=node-question-backoffice:1.0
+#IMAGE_NAME2=go-question-api:1.0
 
 
 ###############################################################################
 # Remove Container And Image
 ###############################################################################
-DOCKER_PSID=`docker ps -af name="${CONTAINER_WEB}" -q`
-if [ ${#DOCKER_PSID} -ne 0 ]; then
-    docker rm -f ${CONTAINER_WEB}
-fi
-
-DOCKER_PSID=`docker ps -af name="${CONTAINER_MYSQL}" -q`
-if [ ${#DOCKER_PSID} -ne 0 ]; then
-    docker rm -f ${CONTAINER_MYSQL}
-fi
-
+for con in $CONTAINER_API_SERVER $CONTAINER_BACK_SERVER $CONTAINER_FRONT_SERVER $CONTAINER_MYSQL $CONTAINER_NGINX; do
+    DOCKER_PSID=`docker ps -af name="${con}" -q`
+    if [ ${#DOCKER_PSID} -ne 0 ]; then
+        docker rm -f ${con}
+    fi
+done
 #docker rm -f $(docker ps -aq)
 
 DOCKER_IMGID=`docker images "${IMAGE_NAME}" -q`
@@ -37,15 +41,13 @@ fi
 ###############################################################################
 # Docker-compose / build and up
 ###############################################################################
-docker-compose  build
-docker-compose  up -d
+docker-compose build
+docker-compose up -d
 
-# run server mode
-# foreground
-#docker exec -it ${CONTAINER_NAME} bash ./docker-entrypoint.sh
 
-# background(trying)
-docker exec -itd ${CONTAINER_NAME} bash ./docker-entrypoint.sh
+# background
+docker exec -itd ${CONTAINER_API_SERVER} bash /docker-entrypoint.sh
+docker exec -itd ${CONTAINER_BACK_SERVER} bash /docker-entrypoint.sh
 
 ###############################################################################
 # Docker-compose / check
@@ -59,25 +61,27 @@ docker-compose logs
 ###############################################################################
 # Exec
 ###############################################################################
-#docker exec -it web bash
+#docker exec -it question-api bash
+
+#questionnaires -docker 1
+#ps -aux
 
 
-###############################################################################
-# Test
-###############################################################################
+#docker exec -it question-backoffice bash
+
 
 
 
 ###############################################################################
 # Docker-compose / down
 ###############################################################################
-#docker-compose -f ${COMPOSE_FILE} down
+#docker-compose down
 
 ###############################################################################
 # Check connection
 ###############################################################################
-#mysql -u root -p -h 127.0.0.1 -P 13306
-#redis-cli -h 127.0.0.1 -p 16379 -a password
+#mysql -u root -p -h 127.0.0.1 -P 4306
 
 #Access by browser
-#http://docker.hiromaily.com:9999/
+#http://localhost:8080/api/ques
+#http://localhost:8083/api/ques
