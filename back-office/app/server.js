@@ -1,12 +1,18 @@
 var express = require("express");
 var app = express();
 
-var RootDir = '/Users/hy/work/go/src/github.com/hiromaily/go-questionnaires/back-office/app'
+//Local
+//var RootDir = '/Users/hy/work/go/src/github.com/hiromaily/go-questionnaires/back-office/app'
+
+//Docker
+var RootDir = '/usr/src/back-office/app'
+
 var ViewDir = RootDir + '/views';
 var StaticDir = RootDir + '/statics'
 var port = 8082;
 
-app.use(express.static(StaticDir));
+//app.use(express.static(StaticDir));
+app.use('/admin', express.static(StaticDir));
 
 var server = app.listen(port, function(){
     console.log("Node.js is listening to PORT:" + server.address().port);

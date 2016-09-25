@@ -3,7 +3,6 @@ import $           from 'jquery'
 
 import ListDetails from "../components/list/details.jsx"
 
-//TODO:To get q list from server: change url (now it's static json)
 //TODO:To delete q from server
 
 export default class List extends React.Component {
@@ -18,15 +17,12 @@ export default class List extends React.Component {
   }
 
   //Ajax
-  callAjax(passedURL, sendData) {
+  callAjax(passedURL, method, id) {
     console.log("[List]:callAjax")
 
     let that = this
-    let method = 'get'
+    //let method = 'get'
     let contentType = "application/json"
-    if(sendData != ''){
-      sendData = JSON.stringify(sendData);
-    }
 
     $.ajax({
       url: encodeURI(passedURL),
@@ -35,14 +31,32 @@ export default class List extends React.Component {
       crossDomain: false,
       contentType: contentType,
       dataType:    'json', //data type from server
-      data:        sendData
+      data:        ''
     }).done(function (data, textStatus, jqXHR) {
       console.log(data)
-      that.setState({
-        list: data.list
-      })
+      if(method == 'get'){
+        that.setState({
+          list: data.list
+        })
+      }else if(method == 'delete'){
+        //TODO:remove element
+        let newList = that.state.list.map(function (data, index) {
+          console.log(data)
+          if(data.id == id){
+            return
+          }else{
+            return data
+          }
+        })
+        console.log(newList)
+        //that.setState({
+        //  list: newList
+        //})
+        //undefined
+
+      }
     }).fail(function (jqXHR, textStatus, errorThrown) {
-      console.error(url, textStatus, errorThrown.toString())
+      console.error(passedURL, textStatus, errorThrown.toString())
       swal("error!", "validation error was occurred!", "error")
     })
   }
@@ -52,14 +66,18 @@ export default class List extends React.Component {
     console.log("[List]:getQuestionnaireList()")
 
     //call ajax
-    let url = '/json/questionnaireList.json'
-    this.callAjax(url, '')
+    //let url = '/admin/json/questionnaireList.json'
+    let url = '/api/ques'
+    this.callAjax(url, 'get', 0)
   }
 
   //Click delete btn
   delBtnEvt(id) {
     console.log("[List]:delBtnEvt()")
     console.log(" id is ", id)
+
+    let url = '/api/ques/'+id
+    this.callAjax(url, 'delete', id)
   }
 
   //Only once before first render()
@@ -86,7 +104,7 @@ export default class List extends React.Component {
         <table className="table">
           <thead>
             <tr>
-              <th>No.</th>
+              <th>ID</th>
               <th>Title</th>
               <th>Result</th>
               <th>Delete</th>

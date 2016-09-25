@@ -13,7 +13,7 @@ export default class Question extends React.Component {
   changeQuestionEvt(e) {
     console.log("[Question]:changeQuestionEvt(e)")
     //call
-    this.props.chgQ.call(this, e.target.value, this.props.idx-1)
+    this.props.chgQ.call(this, e.target.value, this.props.idx)
   }
 
   //Click del button
@@ -27,16 +27,17 @@ export default class Question extends React.Component {
     }
 
     //call event for post btn click
-    this.props.btnDel.call(this, this.props.idx-1)
+    this.props.btnDel.call(this, this.props.idx)
   }
 
   render() {
 
     return (
       <div>
+      <p className="text-danger">{this.props.error}</p>
       <div className="input-group">
-        <span className="input-group-addon" id="sizing-addon2">Question{this.props.idx}</span>
-        <input type="text" className="form-control" placeholder={"question" + this.props.idx}
+        <span className="input-group-addon" id="sizing-addon2">Question{this.props.idx+1}</span>
+        <input type="text" className="form-control" placeholder={"question" + (this.props.idx+1)}
           onChange={this.changeQuestionEvt} aria-describedby="sizing-addon2" defaultValue={this.props.question} />
         <span className="input-group-btn">
           <button className="btn btn-secondary" onClick={this.clickBtnEvt} type="button">Delete</button>

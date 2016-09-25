@@ -1,19 +1,12 @@
 {
-  "questionnaire_id": 1,
-  "questions": ["Q1 aaaaaa", "Q2 bbbbbb", "Q3 ccccc", "Q4 ddddd", "Q5 eeeee"],
-  "answers": [
-    {
-      "email": "aaa@gmail.com",
-      "answer": {"answer": [{"order_no": 1, "answer": "answer1"},{"order_no": 2, "answer": "answer2"},{"order_no": 3, "answer": "answer3"}]}
-    },
-    {
-      "email": "bbb@gmail.com",
-      "answer": {"answer": [{"order_no": 1, "answer": "answer1"},{"order_no": 2, "answer": "answer2"},{"order_no": 3, "answer": "answer3"}]}
-    },
-    {
-      "email": "ccc@gmail.com",
-      "answer": {"answer": [{"order_no": 1, "answer": "answer1"},{"order_no": 2, "answer": "answer2"},{"order_no": 3, "answer": "answer3"}]}
-    }
-  ]
+  "id": 1,
+  "title": "title1",
+  "questions": ["question1", "question2", "question3"],
+  "answers": [{
+    "email": "abc@gmail.com",
+    "answer": ["answer1", "answer2", "answer3"]
+  }, {
+    "email": "xxxx@gmail.com",
+    "answer": ["aaaaa111", "bbbbb222", "ccccc333"]
+  }]
 }
-

@@ -9,7 +9,11 @@ export default class Result extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-        result: {}
+        result: {
+            "questionnaire_id": 0,
+            "questions": [],
+            "answers": []
+        }
     }
 
     this.getResult = this.getResult.bind(this)
@@ -49,6 +53,9 @@ export default class Result extends React.Component {
   getResult() {
     console.log("[Result]:getResult()")
 
+    //TODO:use id
+    console.log(this.props.params.id)
+
     //call ajax
     let url = '/json/result1.json'
     this.callAjax(url, '')
@@ -66,7 +73,6 @@ export default class Result extends React.Component {
   //
   render() {
     console.log("[Result]render()")
-
     let header = this.state.result.questions.map(function (title, index) {
       return (
         <ResultHeader key={index} title={title} />
@@ -75,7 +81,7 @@ export default class Result extends React.Component {
 
     let body = this.state.result.answers.map(function (data, index) {
       return (
-        <ResultBody key={index} idx={index} email={data.answers.email} answers={data.answers} />
+        <ResultBody key={index} idx={index+1} email={data.email} answer={data.answer} />
       )
     })
 
@@ -92,7 +98,7 @@ export default class Result extends React.Component {
             </tr>
           </thead>
           <tbody>
-            {header}
+            {body}
           </tbody>
         </table>
       </div>

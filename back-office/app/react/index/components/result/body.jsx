@@ -1,6 +1,6 @@
 import React from "react"
 
-import ResultBody2   from "../components/result/body2.jsx"
+import ResultBody2   from "./body2.jsx"
 
 export default class ResultBody extends React.Component {
   constructor(props) {
@@ -10,9 +10,9 @@ export default class ResultBody extends React.Component {
   //
   render() {
 
-    let answers = this.props.answers.map(function (answer) {
+    let answers = this.props.answer.map(function (answer, index) {
       return (
-        <ResultBody2 key={index} answer={answer.answer} />
+        <ResultBody2 key={index} answer={answer} />
       )
     })
 
@@ -20,13 +20,9 @@ export default class ResultBody extends React.Component {
       <tr>
         <th scope="row">{this.props.idx}</th>
         <td>{this.props.email}</td>
-
-        <td>
-        </td>
-
+        {answers}
       </tr>
 
-      <th>{this.props.title}</th>
     )
   }
 }
