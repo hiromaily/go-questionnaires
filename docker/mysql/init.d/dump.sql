@@ -54,34 +54,6 @@ UNLOCK TABLES;
 
 
 --
--- Table structure for table `t_questions`
--- TODO:it may be deleted
-
-DROP TABLE IF EXISTS `t_questions`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `t_questions` (
-  `questions_id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'question ID',
-  `questionnaire_id` int(11) NOT NULL COMMENT 'questionnaire ID',
-  `order_no` smallint NOT NULL COLLATE utf8_unicode_ci NOT NULL COMMENT 'question order no',
-  `question` varchar(50) COLLATE utf8_unicode_ci DEFAULT NULL COMMENT 'question',
-  `delete_flg` char(1) COLLATE utf8_unicode_ci DEFAULT '0' COMMENT 'delete flg',
-  `create_datetime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'created date',
-  `update_datetime` datetime DEFAULT CURRENT_TIMESTAMP COMMENT 'updated date',
-  PRIMARY KEY (`questions_id`),
-  KEY `idx_questionnaire` (`questionnaire_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci COMMENT='Questions Table';
-/*!40101 SET character_set_client = @saved_cs_client */;
-
-
-LOCK TABLES `t_questions` WRITE;
-/*!40000 ALTER TABLE `t_questions` DISABLE KEYS */;
-INSERT INTO `t_questions` VALUES (1,1,1, 'q1','0','2016-09-24 21:43:15','2016-09-24 21:43:15'),(2,1,2,'q2','0','2016-09-24 21:43:15','2016-09-24 21:43:15'),(3,1,3,'q3','0','2016-09-24 21:43:15','2016-09-24 21:43:15');
-/*!40000 ALTER TABLE `t_questions` ENABLE KEYS */;
-UNLOCK TABLES;
-
-
---
 -- Table structure for table `t_answers`
 --
 
