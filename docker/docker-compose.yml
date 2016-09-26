@@ -54,6 +54,21 @@ services:
     tty: true
     restart: always
     command: bash
+  # nodejs:frontoffice-server
+  front-office:
+    build:
+      context: ./frontoffice/
+    image: node-question-frontoffice:1.0
+    container_name: question-frontoffice
+    ports:
+      - "8081:8081"
+    volumes:
+      - ./frontoffice/logs:/var/log/questionnaire
+      - ${GOPATH}/src/github.com/hiromaily/go-questionnaires/front-office:/usr/src/front-office
+    stdin_open: true
+    tty: true
+    restart: always
+    command: bash
   # Nginx
   nginx:
     build:
@@ -65,7 +80,9 @@ services:
     links:
       - api:api-server
       - back-office:back-server
+      - front-office:front-server
     depends_on:
       - api
       - back-office
+      - front-office
     restart: always

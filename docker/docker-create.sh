@@ -17,8 +17,9 @@ CONTAINER_MYSQL=question-mysql
 CONTAINER_NGINX=question-nginx
 
 #Image
-IMAGE_NAME=node-question-backoffice:1.0
-#IMAGE_NAME2=go-question-api:1.0
+#IMAGE_NAME=node-question-backoffice:1.0
+#IMAGE_NAME2=node-question-frontoffice:1.0
+#IMAGE_NAME3=go-question-api:1.0
 
 
 ###############################################################################
@@ -32,10 +33,10 @@ for con in $CONTAINER_API_SERVER $CONTAINER_BACK_SERVER $CONTAINER_FRONT_SERVER 
 done
 #docker rm -f $(docker ps -aq)
 
-DOCKER_IMGID=`docker images "${IMAGE_NAME}" -q`
-if [ ${#DOCKER_IMGID} -ne 0 ]; then
-    docker rmi ${IMAGE_NAME}
-fi
+#DOCKER_IMGID=`docker images "${IMAGE_NAME}" -q`
+#if [ ${#DOCKER_IMGID} -ne 0 ]; then
+#    docker rmi ${IMAGE_NAME}
+#fi
 
 
 ###############################################################################
@@ -48,6 +49,7 @@ docker-compose up -d
 # background
 docker exec -itd ${CONTAINER_API_SERVER} bash /docker-entrypoint.sh
 docker exec -itd ${CONTAINER_BACK_SERVER} bash /docker-entrypoint.sh
+docker exec -itd ${CONTAINER_FRONT_SERVER} bash /docker-entrypoint.sh
 
 ###############################################################################
 # Docker-compose / check
@@ -68,6 +70,7 @@ docker-compose logs
 
 
 #docker exec -it question-backoffice bash
+#docker exec -it question-frontoffice bash
 
 
 
@@ -84,4 +87,6 @@ docker-compose logs
 
 #Access by browser
 #http://localhost:8080/api/ques
+#http://localhost:8081/
+#http://localhost:8082/admin/
 #http://localhost:8083/api/ques
