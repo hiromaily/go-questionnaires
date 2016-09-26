@@ -4,5 +4,4 @@
 
 docker/mysql/db_data/*
 
-back-office/app/statics/lib/*
 node_modules/

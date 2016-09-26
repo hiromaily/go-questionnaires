@@ -41,9 +41,12 @@ export default class Nav extends React.Component {
               <li className={creationClass}>
                 <Link to="creation" onClick={this.toggleCollapse.bind(this)}>Creation</Link>
               </li>
+
+              {/*
               <li className={resultClass}>
                 <Link to="result" onClick={this.toggleCollapse.bind(this)}>Result</Link>
               </li>
+              */}
             </ul>
           </div>
         </div>
