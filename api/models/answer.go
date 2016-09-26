@@ -1,8 +1,10 @@
 package models
 
 import (
+	"errors"
 	"fmt"
 	lg "github.com/hiromaily/golibs/log"
+	u "github.com/hiromaily/golibs/utils"
 )
 
 // table name
@@ -39,4 +41,46 @@ SELECT q.questionnaire_id, q.title, q.questions, a.user_email, a.answers
 	_ = m.Db.SelectIns(sql, delFlg, delFlg, id).Scan(questionnaires)
 
 	return m.Db.Err
+}
+
+// IsEmailExisting is to check existing email
+func (m *Models) IsEmailExisting(id, email string) error {
+	lg.Info("IsEmailExisting()")
+
+	sql := `
+SELECT count(answers_id)
+ FROM %s
+ WHERE questionnaire_id=?
+ AND user_email=?
+ AND delete_flg="0"
+`
+	sql = fmt.Sprintf(sql, tblAnswers)
+
+	// get count
+	count, err := m.Db.SelectCount(sql, id, email)
+
+	if err != nil {
+		lg.Debugf("IsEmailExisting() Error: %s", err)
+		return err
+	}
+
+	if count != 0 {
+		return errors.New("this email has already been registered")
+	}
+
+	return nil
+}
+
+// InsertAnswer is to post new answer
+func (m *Models) InsertAnswer(id string, email string, answers string) (int64, error) {
+	lg.Info("GetQuestionnaireList()")
+
+	//Insert t_answers
+	sql := fmt.Sprintf("INSERT INTO %s (questionnaire_id, user_email, answers) VALUES (?, ?, ?)", tblAnswers)
+	newID, err := m.Db.Insert(sql, u.Atoi(id), email, answers)
+	if err != nil {
+		return 0, err
+	}
+
+	return newID, nil
 }

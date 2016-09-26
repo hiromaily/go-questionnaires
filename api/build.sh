@@ -69,8 +69,16 @@ if [ $CURL_MODE -eq 1 ]; then
     #http://localhost:8083/api/ques/5
     curl http://localhost:8083/api/ques/5 -X DELETE
 
+    #Answer
     #[GET]
     #http://localhost:8083/api/answer/1
     curl localhost:8083/api/answer/1
+
+    #[POST]
+    #http://localhost:8083/api/answer/1
+    curl -v -H "Accept: application/json" -H "Content-type: application/json" \
+    -X POST -d '{"email":"aaa@bbb.ccc", "answers":["a1","a2","a3"]}' \
+    http://localhost:8084/api/answer/1
+
 fi
 

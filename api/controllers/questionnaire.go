@@ -21,37 +21,6 @@ type FormattedQuestionnaires struct {
 	Questions []string `column:"questions" json:"questions"`
 }
 
-// FormattedAnswers is to store formated Answers
-type FormattedAnswers struct {
-	ID        int      `json:"id"`
-	Title     string   `json:"title"`
-	Questions []string `json:"questions"`
-	Answers   []Answer `json:"answers"`
-}
-
-// Answer is child of FormattedAnswers
-type Answer struct {
-	Email  string   `json:"email"`
-	Answer []string `json:"answer"`
-}
-
-/*
-{
-  "questionnaire_id": 1,
-  "questions": ["Q1 aaaaaa", "Q2 bbbbbb", "Q3 ccccc", "Q4 ddddd", "Q5 eeeee"],
-  "answers": [{
-    "email": "aaa@gmail.com",
-    "answer": ["answer1", "answer2", "answer3", "answer4", "answer5"]
-  }, {
-    "email": "bbb@gmail.com",
-    "answer": ["answer-b-1", "", "answer-b-3", "answer-b-4", "answer-b-5"]
-  }, {
-    "email": "ccc@gmail.com",
-    "answer": ["answer-c-1", "answer-c-2", "answer-c-3", "answer-c-4", "answer-c-5"]
-  }]
-}
-*/
-
 // RequestQuestionnaires is request data when posting new data for questionnaires
 type RequestQuestionnaires struct {
 	Title     string   `json:"title"`
@@ -59,8 +28,8 @@ type RequestQuestionnaires struct {
 }
 
 // validation for post request for creation of questionnaire
-func postRequestParamAndValid(c *gin.Context, req *RequestQuestionnaires) (err error) {
-	lg.Info("postRequestParamAndValid()")
+func validationQuestionnaire(c *gin.Context, req *RequestQuestionnaires) (err error) {
+	lg.Info("validationQuestionnaire()")
 
 	contentType := c.Request.Header.Get("Content-Type")
 	lg.Debug(" Content-Type is ", contentType)
@@ -133,7 +102,7 @@ func PostRegQuesAction(c *gin.Context) {
 
 	//Param & Check valid
 	var request RequestQuestionnaires
-	err := postRequestParamAndValid(c, &request)
+	err := validationQuestionnaire(c, &request)
 	if err != nil {
 		c.AbortWithError(400, err)
 		return
@@ -179,50 +148,4 @@ func DeleteQuesAction(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"affected": affected,
 	})
-}
-
-// GetAnswerAction is to get answer by ID
-func GetAnswerAction(c *gin.Context) {
-	lg.Info("GetAnswerAction()")
-
-	//Param
-	if c.Param("id") == "" {
-		c.AbortWithError(400, errors.New("missing id on request parameter"))
-		return
-	}
-
-	var ans []m.Answers
-	err := m.GetDB().GetAnswersByID(&ans, c.Param("id"))
-	if err != nil {
-		c.AbortWithError(500, err)
-		return
-	}
-
-	//lg.Debug(ans)
-	//[{1 title1 abc@gmail.com ["answer1", "answer2", "answer3"]} {1 title1 xxxx@gmail.com ["aaaaa111", "bbbbb222", "ccccc333"]}]
-
-	//convert data
-	var f FormattedAnswers
-	//var a []Answer
-	a := make([]Answer, 0, len(ans))
-
-	f.ID = ans[0].ID
-	f.Title = ans[0].Title
-	json.Unmarshal([]byte(ans[0].Questions), &f.Questions)
-
-	for _, v := range ans {
-		//json
-		var answers []string
-		json.Unmarshal([]byte(v.Answers), &answers)
-
-		a = append(a, Answer{
-			Email:  v.Email,
-			Answer: answers,
-		})
-	}
-	f.Answers = a
-
-	//lg.Debug(f)
-
-	c.JSON(http.StatusOK, f)
 }

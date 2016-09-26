@@ -11,7 +11,7 @@ import (
 )
 
 var (
-	serverPort        = 8083
+	serverPort        = 8084
 	dbHost            = "localhost"
 	dbPort     uint16 = 13306
 	dbName            = "questionnaire"
@@ -35,6 +35,8 @@ func setURL(r *gin.Engine) {
 
 	//Get answer by ID
 	r.GET("/api/answer/:id", con.GetAnswerAction)
+	//Register answer by ID
+	r.POST("/api/answer/:id", con.PostAnswerAction)
 }
 
 // settings for mysql
@@ -52,7 +54,7 @@ func init() {
 	//Docker Settings
 	if *docker == 1 {
 		lg.Info("docker mode")
-		//serverPort = 8083
+		serverPort = 8083
 		dbHost = "mysql-server"
 		dbPort = 3306
 		//dbName     = "questionnaire"
