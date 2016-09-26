@@ -13,11 +13,16 @@ questionnaires services.
 * For front-office server created Node.js and React
 
 ### 4.docker
-* setting files for docker environment
+* setting files of docker environment for development
+
+### 5.docker2
+* setting files of docker environment for release
 
 
 ## Installation on Local
 ```
+$ ./docker2/create_containers.sh
+ or
 $ ./docker/docker-create.sh
 ```
 
