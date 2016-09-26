@@ -180,10 +180,11 @@ export default class Answer extends React.Component {
     let questions = this.props.location.query.q.map(function (data, index) {
       let key='q_' + index
       let err = that.state.errAnswer[index]
+      let answer = that.state.answers[index]
       //console.log("state is ", that.state)
       //console.log("err is ", err)
       return (
-        <AnswerDetails key={key} index={index} question={data} chgA={that.changeAnswer} error={err} />
+        <AnswerDetails key={key} index={index} question={data} answer={answer} chgA={that.changeAnswer} error={err} />
       )
     })
 
@@ -206,7 +207,8 @@ export default class Answer extends React.Component {
         <div className="input-group">
           <span className="input-group-addon" id="sizing-addon2">E-Mail</span>
           <input type="text" className="form-control" placeholder="email@example.com"
-          onChange={this.changeEmailEvt} aria-describedby="sizing-addon2" />
+          onChange={this.changeEmailEvt} aria-describedby="sizing-addon2"
+          value={this.state.email} />
         </div>
         <br />
         <button className="btn btn-primary" onClick={this.createBtnEvt} type="button">Create</button>
