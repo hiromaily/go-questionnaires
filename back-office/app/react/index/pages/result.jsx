@@ -43,7 +43,7 @@ export default class Result extends React.Component {
       })
     }).fail(function (jqXHR, textStatus, errorThrown) {
       console.error(passedURL, textStatus, errorThrown.toString())
-      swal("error!", "validation error was occurred!", "error")
+      swal("error!", "validation error was occurred or no result!!", "error")
     })
   }
 

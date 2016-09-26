@@ -50,6 +50,7 @@ export default class Creation extends React.Component {
         questions: [''],
         update: true
        })
+      swal("success!", "done!", "success")
     }).fail(function (jqXHR, textStatus, errorThrown) {
       console.error(passedURL, textStatus, errorThrown.toString())
       swal("error!", "validation error was occurred!", "error")
