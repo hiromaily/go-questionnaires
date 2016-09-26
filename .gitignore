@@ -2,6 +2,5 @@
 .idea/
 .vscode
 
-docker/mysql/db_data/*
-
-node_modules/
+#docker/mysql/db_data/*
+#node_modules/
