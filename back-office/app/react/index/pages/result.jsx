@@ -10,9 +10,10 @@ export default class Result extends React.Component {
     super(props)
     this.state = {
         result: {
-            "questionnaire_id": 0,
-            "questions": [],
-            "answers": []
+            'id': 0,
+            'title': '',
+            'questions': [],
+            'answers': []
         }
     }
 
@@ -20,15 +21,12 @@ export default class Result extends React.Component {
   }
 
   //Ajax
-  callAjax(passedURL, sendData) {
+  callAjax(passedURL) {
     console.log("[Result]:callAjax")
 
     let that = this
     let method = 'get'
     let contentType = "application/json"
-    if(sendData != ''){
-      sendData = JSON.stringify(sendData);
-    }
 
     $.ajax({
       url: encodeURI(passedURL),
@@ -37,14 +35,14 @@ export default class Result extends React.Component {
       crossDomain: false,
       contentType: contentType,
       dataType:    'json', //data type from server
-      data:        sendData
+      data:        ''
     }).done(function (data, textStatus, jqXHR) {
       console.log(data)
       that.setState({
         result: data
       })
     }).fail(function (jqXHR, textStatus, errorThrown) {
-      console.error(url, textStatus, errorThrown.toString())
+      console.error(passedURL, textStatus, errorThrown.toString())
       swal("error!", "validation error was occurred!", "error")
     })
   }
@@ -53,19 +51,18 @@ export default class Result extends React.Component {
   getResult() {
     console.log("[Result]:getResult()")
 
-    //TODO:use id
-    console.log(this.props.params.id)
-
     //call ajax
-    let url = '/json/result1.json'
-    this.callAjax(url, '')
+    //let url = '/admin/json/result1.json'
+    let url = '/api/answer/'+this.props.params.id
+
+    this.callAjax(url)
   }
 
   //Only once before first render()
   componentWillMount() {
     console.log("[Result]:componentWillMount()")
-    console.log(this.props.params.id)
-    console.log(this.props.location.query)
+    //console.log(this.props.params.id)
+    //console.log(this.props.location.query)
 
     this.getResult()
   }

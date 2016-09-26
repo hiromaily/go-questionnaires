@@ -39,21 +39,21 @@ export default class List extends React.Component {
           list: data.list
         })
       }else if(method == 'delete'){
-        //TODO:remove element
-        let newList = that.state.list.map(function (data, index) {
-          console.log(data)
-          if(data.id == id){
-            return
-          }else{
-            return data
-          }
-        })
-        console.log(newList)
-        //that.setState({
-        //  list: newList
-        //})
-        //undefined
+        //remove element
+        let newList = that.state.list
+        let delIndex = 0
+        //search index
+        for(let i=0,len=newList.length; i<len; i++){
+            if(newList[i].id==id){
+                delIndex = i
+                break
+            }
+        }
+        newList.splice(delIndex, 1)
 
+        that.setState({
+          list: newList
+        })
       }
     }).fail(function (jqXHR, textStatus, errorThrown) {
       console.error(passedURL, textStatus, errorThrown.toString())
@@ -74,7 +74,6 @@ export default class List extends React.Component {
   //Click delete btn
   delBtnEvt(id) {
     console.log("[List]:delBtnEvt()")
-    console.log(" id is ", id)
 
     let url = '/api/ques/'+id
     this.callAjax(url, 'delete', id)
