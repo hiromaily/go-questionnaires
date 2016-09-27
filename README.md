@@ -4,13 +4,13 @@ questionnaires services.
 
 ## Directory composition
 ### 1.api
-* For api server created Golang
+* For api server created by Golang
 
 ### 2.back-offcice
-* For back-office server created Node.js and React
+* For back-office server created by Node.js and React
 
 ### 3.front-offcice
-* For front-office server created Node.js and React
+* For front-office server created by Node.js and React
 
 ### 4.docker
 * setting files of docker environment for development
@@ -21,8 +21,10 @@ questionnaires services.
 
 ## Installation on Local
 ```
+[Release]
 $ ./docker2/create_containers.sh
  or
+[Development]
 $ cd ./docker;./docker-create.sh
 ```
 
@@ -31,9 +33,9 @@ $ cd ./docker;./docker-create.sh
 |:---------------------|:------------------------|:-----------|
 | question-nginx       | Nginx for reverse proxy | 8080->80   |
 | question-mysql       | MySQL5.7                | 4306->3306 |
-| question-api         | API servver             | 8083->8083 |
+| question-api         | API server              | 8083->8083 |
 | question-backoffice  | Back-Office server      | 8082->8082 |
-| question-frontoffice | Front-Office server     | 8082->8082 |
+| question-frontoffice | Front-Office server     | 8081->8081 |
 
 ## Endpoint (For localhost on Nginx)
 ### Front-Office Server
