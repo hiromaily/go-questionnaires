@@ -1,0 +1,52 @@
+#docker-compose.yml
+version: '2'
+services:
+  # MySQL
+  mysql:
+    image: hirokiy/question-mysql:1.0
+    cpu_shares: 100
+    mem_limit: 524288000
+    #mem_limit: 262144000
+    ports:
+      - "3306:3306"
+  # golang:api-server
+  api:
+    image: hirokiy/question-api:1.0
+    cpu_shares: 100
+    mem_limit: 524288000
+    #mem_limit: 262144000
+    ports:
+      - "8083:8083"
+    links:
+      - mysql:mysql-server
+    command: bash
+  # nodejs:backoffice-server
+  back-office:
+    image: hirokiy/question-back:1.0
+    cpu_shares: 100
+    mem_limit: 524288000
+    #mem_limit: 262144000
+    ports:
+      - "8082:8082"
+    command: bash
+  # nodejs:frontoffice-server
+  front-office:
+    image: hirokiy/question-front
+    cpu_shares: 100
+    mem_limit: 524288000
+    #mem_limit: 262144000
+    ports:
+      - "8081:8081"
+    command: bash
+  # Nginx
+  nginx:
+    image: hirokiy/question-nginx:1.0
+    cpu_shares: 100
+    mem_limit: 524288000
+    #mem_limit: 262144000
+    ports:
+      - "80:80"
+    links:
+      - api:api-server
+      - back-office:back-server
+      - front-office:front-server
