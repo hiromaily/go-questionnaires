@@ -23,7 +23,7 @@ questionnaires services.
 ```
 $ ./docker2/create_containers.sh
  or
-$ ./docker/docker-create.sh
+$ cd ./docker;./docker-create.sh
 ```
 
 ## docker environment
