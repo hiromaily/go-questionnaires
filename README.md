@@ -1,5 +1,6 @@
 # go-questionnaires
-questionnaires services.
+questionnaires services.  
+This project was developed as company's assessment within 3 days when I applied for there.
 
 
 ## Directory composition

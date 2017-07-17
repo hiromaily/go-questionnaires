@@ -1,0 +1,7 @@
+*.tmpl linguist-language=golang
+back-office/node_modules/* linguist-documentation
+back-office/app/statics/* linguist-documentation
+back-office/app/views/* linguist-documentation
+front-office/node_modules/* linguist-documentation
+front-office/app/statics/* linguist-documentation
+front-office/app/views/* linguist-documentation
