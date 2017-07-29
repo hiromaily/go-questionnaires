@@ -1,4 +1,10 @@
 # go-questionnaires
+
+[![Go Report Card](https://goreportcard.com/badge/github.com/hiromaily/go-questionnaires)](https://goreportcard.com/report/github.com/hiromaily/go-questionnaires)
+[![codebeat badge](https://codebeat.co/badges/5531a607-8a8c-4768-a05b-4e4cc3dee101)](https://codebeat.co/projects/github-com-hiromaily-go-questionnaires-master)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/999e25ce8e1e44a69b4bc2620b0d2743)](https://www.codacy.com/app/hiromaily2/go-questionnaires?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=hiromaily/go-questionnaires&amp;utm_campaign=Badge_Grade)
+[![MIT License](http://img.shields.io/badge/license-MIT-blue.svg?style=flat)](https://raw.githubusercontent.com/hiromaily/go-questionnaires/master/LICENSE)
+
 questionnaires services.  
 This project was developed as company's assessment within 3 days when I applied for there.
 
