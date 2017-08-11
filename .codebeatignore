@@ -1,0 +1,4 @@
+api/Godeps/**
+api/vendor/**
+docker/**
+docker2/**
