@@ -1,0 +1,79 @@
+version: '3.0'
+
+volumes:
+  db: {}
+
+services:
+  # MySQL
+  mysql:
+    image: mysql:5.7
+    container_name: question-mysql
+    volumes:
+      - db:/var/lib/mysql
+      - ./docker/mysql/conf:/etc/mysql/conf.d
+      - ./docker/mysql/init.d:/docker-entrypoint-initdb.d
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: questionnaire
+      MYSQL_USER: hiromaily
+      MYSQL_PASSWORD: 12345678
+    ports:
+      - "3306"
+    restart: always
+
+  # Golang:api-server
+  api:
+    build:
+      context: ./api/
+    image: go-question-api:1.0
+    container_name: question-api
+    ports:
+      - "8083"
+    links:
+      - mysql:mysql-server
+    depends_on:
+      - mysql
+    restart: always
+    command: questionnaires -docker 1
+
+  # Nodejs:backoffice-server
+  back-office:
+    build:
+      context: ./docker/backoffice/
+    image: node-question-backoffice:1.0
+    container_name: question-backoffice
+    ports:
+      - "8082"
+    restart: always
+    #command: bash
+    command: node ./app/server.js
+
+  # Nodejs:frontoffice-server
+  front-office:
+    build:
+      context: ./docker/frontoffice/
+    image: node-question-frontoffice:1.0
+    container_name: question-frontoffice
+    ports:
+      - "8081"
+    restart: always
+    #command: bash
+    command: node ./app/server.js
+
+  # Nginx
+  nginx:
+    build:
+      context: ./docker/nginx/
+    image: nginxs:1.0
+    container_name: question-nginx
+    ports:
+      - "80"
+    links:
+      - api:api-server
+      - back-office:back-server
+      - front-office:front-server
+    depends_on:
+      - api
+      - back-office
+      - front-office
+    restart: always

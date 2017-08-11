@@ -1,71 +1,80 @@
 {
 	"ImportPath": "github.com/hiromaily/go-questionnaires/api",
-	"GoVersion": "go1.7",
-	"GodepVersion": "v74",
+	"GoVersion": "go1.8",
+	"GodepVersion": "v79",
 	"Packages": [
 		"./..."
 	],
 	"Deps": [
 		{
 			"ImportPath": "github.com/gin-gonic/gin",
-			"Comment": "v1.0rc1-268-gf931d1e",
-			"Rev": "f931d1ea80ae95a6fc739213cdd9399bd2967fb6"
+			"Comment": "v1.1-82-gad2dace",
+			"Rev": "ad2dacedd654cdc1c1526971fe83c118318975ba"
 		},
 		{
 			"ImportPath": "github.com/gin-gonic/gin/binding",
-			"Comment": "v1.0rc1-268-gf931d1e",
-			"Rev": "f931d1ea80ae95a6fc739213cdd9399bd2967fb6"
+			"Comment": "v1.1-82-gad2dace",
+			"Rev": "ad2dacedd654cdc1c1526971fe83c118318975ba"
 		},
 		{
 			"ImportPath": "github.com/gin-gonic/gin/render",
-			"Comment": "v1.0rc1-268-gf931d1e",
-			"Rev": "f931d1ea80ae95a6fc739213cdd9399bd2967fb6"
+			"Comment": "v1.1-82-gad2dace",
+			"Rev": "ad2dacedd654cdc1c1526971fe83c118318975ba"
 		},
 		{
 			"ImportPath": "github.com/go-sql-driver/mysql",
-			"Comment": "v1.2-198-g0b58b37",
-			"Rev": "0b58b37b664c21f3010e836f1b931e1d0b0b0685"
+			"Comment": "v1.3-4-g53e2a9b",
+			"Rev": "53e2a9bf25b20e8f597896666f0663d84e22c68e"
 		},
 		{
 			"ImportPath": "github.com/golang/protobuf/proto",
-			"Rev": "3b06fc7a4cad73efce5fe6217ab6c33e7231ab4a"
+			"Rev": "5a0f697c9ed9d68fef0116532c6e05cfeae00e55"
 		},
 		{
 			"ImportPath": "github.com/hiromaily/golibs/db/mysql",
-			"Rev": "2dca096bfbd899488a27477325f00ae90fdd3a5a"
+			"Rev": "504ab28310e94f9f69af21862ac3079781b8e527"
 		},
 		{
 			"ImportPath": "github.com/hiromaily/golibs/log",
-			"Rev": "2dca096bfbd899488a27477325f00ae90fdd3a5a"
+			"Rev": "504ab28310e94f9f69af21862ac3079781b8e527"
 		},
 		{
 			"ImportPath": "github.com/hiromaily/golibs/time",
-			"Rev": "2dca096bfbd899488a27477325f00ae90fdd3a5a"
+			"Rev": "504ab28310e94f9f69af21862ac3079781b8e527"
 		},
 		{
 			"ImportPath": "github.com/hiromaily/golibs/utils",
-			"Rev": "2dca096bfbd899488a27477325f00ae90fdd3a5a"
+			"Rev": "504ab28310e94f9f69af21862ac3079781b8e527"
 		},
 		{
-			"ImportPath": "github.com/manucorporat/sse",
-			"Rev": "ee05b128a739a0fb76c7ebd3ae4810c1de808d6d"
+			"ImportPath": "github.com/mattn/go-isatty",
+			"Comment": "v0.0.2",
+			"Rev": "fc9e8d8ef48496124e79ae0df75490096eccf6fe"
 		},
 		{
 			"ImportPath": "github.com/shiena/ansicolor",
 			"Rev": "a422bbe96644373c5753384a59d678f7d261ff10"
 		},
 		{
-			"ImportPath": "golang.org/x/net/context",
-			"Rev": "71a035914f99bb58fe82eac0f1289f10963d876c"
+			"ImportPath": "github.com/ugorji/go/codec",
+			"Rev": "5efa3251c7f7d05e5d9704a69a984ec9f1386a40"
+		},
+		{
+			"ImportPath": "golang.org/x/sys/unix",
+			"Rev": "47bdb838cce8879fca08207206a5dfde2f2538bc"
+		},
+		{
+			"ImportPath": "gopkg.in/gin-contrib/sse.v0",
+			"Rev": "22d885f9ecc78bf4ee5d72b937e4bbcdc58e8cae"
 		},
 		{
 			"ImportPath": "gopkg.in/go-playground/validator.v8",
-			"Comment": "v8.17.1",
-			"Rev": "014792cf3e266caff1e916876be12282b33059e0"
+			"Comment": "v8.18.1",
+			"Rev": "5f57d2222ad794d0dffb07e664ea05e2ee07d60c"
 		},
 		{
 			"ImportPath": "gopkg.in/yaml.v2",
-			"Rev": "a83829b6f1293c91addabc89d0571c246397bbf4"
+			"Rev": "25c4ec802a7d637f88d584ab26798e94ad14c13b"
 		}
 	]
 }

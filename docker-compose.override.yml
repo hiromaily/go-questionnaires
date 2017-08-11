@@ -1,0 +1,39 @@
+version: "3.0"
+
+services:
+  mysql:
+    ports:
+      - "${MYSQL_PORT:-4306}:3306"
+
+  api:
+    ports:
+      - "${API_PORT:-8083}:8083"
+    volumes:
+      #- ./api:/go/src/github.com/hiromaily/go-questionnaires/api
+      - ./api/cmd:/go/src/github.com/hiromaily/go-questionnaires/api/cmd
+      - ./controllers/cmd:/go/src/github.com/hiromaily/go-questionnaires/api/controllers
+      - ./libs/cmd:/go/src/github.com/hiromaily/go-questionnaires/api/libs
+      - ./models/cmd:/go/src/github.com/hiromaily/go-questionnaires/api/models
+    stdin_open: true
+    tty: true
+    command: fresh -c /go/src/github.com/hiromaily/go-questionnaires/api/runner.conf
+
+  back-office:
+    ports:
+      - "${BACK_PORT:-8082}:8082"
+    volumes:
+      - ./back-office:/usr/src/back-office
+    stdin_open: true
+    tty: true
+
+  front-office:
+    ports:
+      - "${FRONT_PORT:-8081}:8081"
+    volumes:
+      - ./front-office:/usr/src/front-office
+    stdin_open: true
+    tty: true
+
+  nginx:
+    ports:
+      - "${NGINX_PORT:-8080}:80"
