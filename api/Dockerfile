@@ -1,4 +1,4 @@
-# Dcokerfile for api-server
+# Dockerrfile for api-server
 
 FROM golang:1.8
 
