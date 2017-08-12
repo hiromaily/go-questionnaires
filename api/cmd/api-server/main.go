@@ -12,17 +12,17 @@ import (
 )
 
 var (
-	serverPort        = 8084
-	dbHost            = "localhost"
-	dbPort     uint16 = 13306
+	serverPort        = 8083
+	dbHost            = "mysql-server"
+	dbPort     uint16 = 3306
 	dbName            = "questionnaire"
 	dbUser            = "hiromaily"
 	dbPass            = "12345678"
-	logPath           = "/var/log/questionnaire.log"
+	logPath           = "/var/log/questionnaire/api.log"
 )
 
 var (
-	docker     = flag.Int("docker", 0, "0:local, 1:Docker")
+	heroku     = flag.Int("heroku", 0, "0:no Heroku, 1:Heroku")
 	retryCount = flag.Int("rc", 5, "retry count before starting")
 )
 
@@ -42,38 +42,15 @@ func setURL(r *gin.Engine) {
 }
 
 // settings for mysql
-func setupDB() error {
-	err := mysql.New(dbHost, dbName, dbUser, dbPass, dbPort)
-	return err
-}
-
-func init() {
-	flag.Parse()
-
-	//log
-	lg.InitializeLog(lg.DebugStatus, lg.LogOff, 99,
-		"[Questionnaire]", logPath)
-
-	//Docker Settings
-	if *docker == 1 {
-		lg.Info("docker mode")
-		serverPort = 8083
-		dbHost = "mysql-server"
-		dbPort = 3306
-		//dbName     = "questionnaire"
-		//dbUser     = "hiromaily"
-		//dbPass     = "12345678"
-		logPath = "/var/log/questionnaire/api.log"
+func setupDB() {
+	if *retryCount == 0{
+		*retryCount = 1
 	}
 
 	var err error
-	if *retryCount == 0{
-		panic("0 can not be set at rc argument.")
-	}
-
 	for i := 0; i < *retryCount; i++ {
 		lg.Info("connecting to db server ...")
-		err = setupDB()
+		err := mysql.New(dbHost, dbName, dbUser, dbPass, dbPort)
 		if err != nil {
 			lg.Errorf("db connection failed. %v", err)
 			time.Sleep(3 * time.Second)
@@ -86,6 +63,22 @@ func init() {
 	}
 }
 
+func init() {
+	flag.Parse()
+
+	//log
+	lg.InitializeLog(lg.DebugStatus, lg.LogOff, 99,
+		"[Questionnaire]", logPath)
+
+	//Heroku Settings
+	if *heroku == 1 {
+		lg.Info("heroku mode")
+	}
+
+	//Database
+	setupDB()
+}
+
 func main() {
 	//settings
 	router := gin.Default()
@@ -93,13 +86,13 @@ func main() {
 	//URL for JSON API
 	setURL(router)
 
-	lg.Debugf("docker flg is %d", *docker)
-
 	//Run
-	if *docker == 1 {
+	if *heroku == 1 {
+		lg.Info("heroku mode")
+		//for localhost running
+		router.Run(fmt.Sprintf(":%d", serverPort))
+	}else{
 		lg.Info("running on fcgi mode.")
 		fcgi.Run(router, fmt.Sprintf(":%d", serverPort))
-	} else {
-		router.Run(fmt.Sprintf(":%d", serverPort))
 	}
 }

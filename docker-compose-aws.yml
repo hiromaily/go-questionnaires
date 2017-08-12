@@ -20,7 +20,7 @@ services:
       - "8083:8083"
     links:
       - mysql:mysql-server
-    command: questionnaires -docker 1
+    command: questionnaires -heroku 0
 
   # Nodejs:backoffice-server
   back-office:

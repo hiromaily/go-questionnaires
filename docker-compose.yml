@@ -10,7 +10,7 @@ services:
     container_name: question-mysql
     volumes:
       - db:/var/lib/mysql
-      - ./docker/mysql/conf:/etc/mysql/conf.d
+      - ./docker/mysql/conf.d:/etc/mysql/conf.d
       - ./docker/mysql/init.d:/docker-entrypoint-initdb.d
     environment:
       MYSQL_ROOT_PASSWORD: root
@@ -34,7 +34,7 @@ services:
     depends_on:
       - mysql
     restart: always
-    command: /go/bin/questionnaires -docker 1
+    command: /go/bin/questionnaires -heroku 0
 
   # Nodejs:backoffice-server
   back-office:

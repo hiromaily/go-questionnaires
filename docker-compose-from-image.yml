@@ -25,7 +25,7 @@ services:
     stdin_open: true
     tty: true
     restart: always
-    command: /go/bin/questionnaires -docker 1
+    command: /go/bin/questionnaires -heroku 0
 
   # Nodejs:backoffice-server
   back-office:

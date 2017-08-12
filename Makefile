@@ -44,6 +44,36 @@ godep:
 
 
 ###############################################################################
+# Heroku
+###############################################################################
+deploy_static:
+	mkdir -p api/public/admin/ api/public/js/ api/public/css/
+	cp ./front-office/app/views/index.html ./api/public/
+	cp ./front-office/app/statics/dist/index.bundle.js ./api/public/js/frontoffice.js
+	cp ./front-office/app/statics/css/admin.css ./api/public/css/frontoffice.css
+
+	cp ./back-office/app/views/index.html ./api/public/admin/
+	cp ./back-office/app/statics/dist/index.bundle.js ./api/public/js/backoffice.js
+	cp ./back-office/app/statics/css/admin.css ./api/public/css/backoffice.css
+
+    #rewrite
+	cd ./api/public/;sed -e "s|/css/admin.css|/css/frontoffice.css|g" -e "s|/dist/index.bundle.js|/js/frontoffice.js|g" index.html > tmp.html
+	mv -f ./api/public/tmp.html ./api/public/index.html
+	rm -f ./api/public/tmp.html
+
+	cd ./api/public/admin/;sed -e "s|/admin/css/admin.css|/css/backoffice.css|g" -e "s|/admin/dist/index.bundle.js|/js/backoffice.js|g" index.html > tmp.html
+	mv -f ./api/public/admin/tmp.html ./api/public/admin/index.html
+	rm -f ./api/public/admin/tmp.html
+
+heroku_build_base:
+	docker build --no-cache -t hirokiy/qre_base:latest -f ./docker/Dockerfile.base.heroku .
+	docker push hirokiy/qre_base:latest
+
+heroku_build:
+	docker build --no-cache -t hirokiy/qrepack:latest -f ./api/Dockerfile.heroku .
+
+
+###############################################################################
 # Test by curl
 ###############################################################################
 curl:
