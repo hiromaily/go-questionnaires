@@ -14,6 +14,7 @@ services:
       - ./api/controllers:/go/src/github.com/hiromaily/go-questionnaires/api/controllers
       - ./api/libs:/go/src/github.com/hiromaily/go-questionnaires/api/libs
       - ./api/models:/go/src/github.com/hiromaily/go-questionnaires/api/models
+      - ./api/public:/go/src/github.com/hiromaily/go-questionnaires/api/public
     stdin_open: true
     tty: true
     command: fresh -c /go/src/github.com/hiromaily/go-questionnaires/api/runner.conf

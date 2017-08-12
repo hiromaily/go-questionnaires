@@ -1,11 +1,17 @@
 var express = require("express");
 var app = express();
-
-//Local
-//var RootDir = '/Users/hy/work/go/src/github.com/hiromaily/go-questionnaires/back-office/app'
+var debugMode = 0;
+//debug mode
+//debugMode = 1;
 
 //Docker
 var RootDir = '/usr/src/front-office/app'
+
+if (debugMode && debugMode == 1){
+    //Local
+    RootDir = '/Users/hy/work/go/src/github.com/hiromaily/go-questionnaires/front-office/app'
+}
+
 
 var ViewDir = RootDir + '/views';
 var StaticDir = RootDir + '/statics'
@@ -20,6 +26,10 @@ var server = app.listen(port, function(){
 
 
 app.get("/", function(req, res, next){
-    //res.json(photoList);
-    res.sendFile('index.html', { root: ViewDir});
+    if (debugMode && debugMode == 1) {
+        res.sendFile('debug.html', { root: ViewDir});
+    }else{
+        //res.json(photoList);
+        res.sendFile('index.html', { root: ViewDir});
+    }
 });

@@ -38,7 +38,7 @@ export default class Nav extends React.Component {
                 <IndexLink to="/" onClick={this.toggleCollapse.bind(this)}>List</IndexLink>
               </li>
               <li className={answerClass}>
-                <Link to="answer" onClick={this.toggleCollapse.bind(this)}>Answer</Link>
+                <Link>Answer</Link>
               </li>
             </ul>
           </div>

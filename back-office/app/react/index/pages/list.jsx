@@ -66,8 +66,10 @@ export default class List extends React.Component {
     console.log("[List]:getQuestionnaireList()")
 
     //call ajax
-    //let url = '/admin/json/questionnaireList.json'
     let url = '/api/ques'
+    if (debugMode && debugMode == 1) {
+      url = '/admin/json/questionnaireList.json'
+    }
     this.callAjax(url, 'get', 0)
   }
 

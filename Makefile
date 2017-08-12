@@ -65,10 +65,17 @@ create_static:
 	cd ./api/public/;sed -e "s|/css/admin.css|/css/frontoffice.css|g" -e "s|/dist/index.bundle.js|/js/frontoffice.js|g" index.html > tmp.html
 	mv -f ./api/public/tmp.html ./api/public/index.html
 	rm -f ./api/public/tmp.html
+    #{{define "index"}}
+    #{{end}}
 
 	cd ./api/public/admin/;sed -e "s|/admin/css/admin.css|/css/backoffice.css|g" -e "s|/admin/dist/index.bundle.js|/js/backoffice.js|g" index.html > tmp.html
 	mv -f ./api/public/admin/tmp.html ./api/public/admin/index.html
 	rm -f ./api/public/admin/tmp.html
+
+deployjs:
+	cp ./front-office/app/statics/dist/index.bundle.js ./api/public/js/frontoffice.js
+	cp ./back-office/app/statics/dist/index.bundle.js ./api/public/js/backoffice.js
+
 
 heroku_build_base:
 	docker build -t hirokiy/qre_base:latest -f ./docker/Dockerfile.base.heroku .
