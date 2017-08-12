@@ -46,7 +46,12 @@ godep:
 ###############################################################################
 # Heroku
 ###############################################################################
-deploy_static:
+heroku_init:
+	heroku plugins:install heroku-container-registry
+	heroku container:login
+	heroku create go-questionnaires
+
+create_static:
 	mkdir -p api/public/admin/ api/public/js/ api/public/css/
 	cp ./front-office/app/views/index.html ./api/public/
 	cp ./front-office/app/statics/dist/index.bundle.js ./api/public/js/frontoffice.js
@@ -56,7 +61,7 @@ deploy_static:
 	cp ./back-office/app/statics/dist/index.bundle.js ./api/public/js/backoffice.js
 	cp ./back-office/app/statics/css/admin.css ./api/public/css/backoffice.css
 
-    #rewrite
+	#rewrite
 	cd ./api/public/;sed -e "s|/css/admin.css|/css/frontoffice.css|g" -e "s|/dist/index.bundle.js|/js/frontoffice.js|g" index.html > tmp.html
 	mv -f ./api/public/tmp.html ./api/public/index.html
 	rm -f ./api/public/tmp.html
@@ -81,6 +86,12 @@ heroku_exec:
 
 heroku_stop:
 	docker stop qrepack
+
+heroku_deploy:
+	#go-questionnaires
+	docker build --no-cache -t registry.heroku.com/go-questionnaires/web -f ./api/Dockerfile.heroku .
+	docker push registry.heroku.com/go-questionnaires/web
+
 
 
 ###############################################################################
