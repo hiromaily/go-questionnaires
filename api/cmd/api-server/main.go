@@ -8,6 +8,7 @@ import (
 	"github.com/hiromaily/go-questionnaires/api/libs/fcgi"
 	"github.com/hiromaily/golibs/db/mysql"
 	lg "github.com/hiromaily/golibs/log"
+	"time"
 )
 
 var (
@@ -21,7 +22,8 @@ var (
 )
 
 var (
-	docker = flag.Int("docker", 0, "0:local, 1:Docker")
+	docker     = flag.Int("docker", 0, "0:local, 1:Docker")
+	retryCount = flag.Int("rc", 5, "retry count before starting")
 )
 
 // router
@@ -40,8 +42,9 @@ func setURL(r *gin.Engine) {
 }
 
 // settings for mysql
-func setupDB() {
-	mysql.New(dbHost, dbName, dbUser, dbPass, dbPort)
+func setupDB() error {
+	err := mysql.New(dbHost, dbName, dbUser, dbPass, dbPort)
+	return err
 }
 
 func init() {
@@ -63,7 +66,24 @@ func init() {
 		logPath = "/var/log/questionnaire/api.log"
 	}
 
-	setupDB()
+	var err error
+	if *retryCount == 0{
+		panic("0 can not be set at rc argument.")
+	}
+
+	for i := 0; i < *retryCount; i++ {
+		lg.Info("connecting to db server ...")
+		err = setupDB()
+		if err != nil {
+			lg.Errorf("db connection failed. %v", err)
+			time.Sleep(3 * time.Second)
+			continue
+		}
+		break
+	}
+	if err != nil {
+		panic("database can not be connected.")
+	}
 }
 
 func main() {

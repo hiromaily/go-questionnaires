@@ -32,19 +32,19 @@
 		},
 		{
 			"ImportPath": "github.com/hiromaily/golibs/db/mysql",
-			"Rev": "504ab28310e94f9f69af21862ac3079781b8e527"
+			"Rev": "587ef7b1df5b8e94e04f4bd170437f412bdfd53b"
 		},
 		{
 			"ImportPath": "github.com/hiromaily/golibs/log",
-			"Rev": "504ab28310e94f9f69af21862ac3079781b8e527"
+			"Rev": "587ef7b1df5b8e94e04f4bd170437f412bdfd53b"
 		},
 		{
 			"ImportPath": "github.com/hiromaily/golibs/time",
-			"Rev": "504ab28310e94f9f69af21862ac3079781b8e527"
+			"Rev": "587ef7b1df5b8e94e04f4bd170437f412bdfd53b"
 		},
 		{
 			"ImportPath": "github.com/hiromaily/golibs/utils",
-			"Rev": "504ab28310e94f9f69af21862ac3079781b8e527"
+			"Rev": "587ef7b1df5b8e94e04f4bd170437f412bdfd53b"
 		},
 		{
 			"ImportPath": "github.com/mattn/go-isatty",
