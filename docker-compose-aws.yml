@@ -1,5 +1,5 @@
-#docker-compose.yml
-version: '2'
+version: '3.0'
+
 services:
   # MySQL
   mysql:
@@ -9,7 +9,8 @@ services:
     #mem_limit: 262144000
     ports:
       - "3306:3306"
-  # golang:api-server
+
+  # Golang:api-server
   api:
     image: hirokiy/question-api:1.0
     cpu_shares: 100
@@ -19,8 +20,9 @@ services:
       - "8083:8083"
     links:
       - mysql:mysql-server
-    command: bash
-  # nodejs:backoffice-server
+    command: questionnaires -docker 1
+
+  # Nodejs:backoffice-server
   back-office:
     image: hirokiy/question-back:1.0
     cpu_shares: 100
@@ -28,8 +30,9 @@ services:
     #mem_limit: 262144000
     ports:
       - "8082:8082"
-    command: bash
-  # nodejs:frontoffice-server
+    command: node ./app/server.js
+
+  # Nodejs:frontoffice-server
   front-office:
     image: hirokiy/question-front
     cpu_shares: 100
@@ -37,7 +40,8 @@ services:
     #mem_limit: 262144000
     ports:
       - "8081:8081"
-    command: bash
+    command: node ./app/server.js
+
   # Nginx
   nginx:
     image: hirokiy/question-nginx:1.0

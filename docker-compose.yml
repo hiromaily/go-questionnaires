@@ -45,7 +45,6 @@ services:
     ports:
       - "8082"
     restart: always
-    #command: bash
     command: node ./app/server.js
 
   # Nodejs:frontoffice-server
@@ -57,7 +56,6 @@ services:
     ports:
       - "8081"
     restart: always
-    #command: bash
     command: node ./app/server.js
 
   # Nginx

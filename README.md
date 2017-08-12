@@ -20,20 +20,22 @@ This project was developed as company's assessment within 3 days when I applied 
 * For front-office server created by Node.js and React
 
 ### 4.docker
-* setting files of docker environment for development
-
-### 5.docker2
-* setting files of docker environment for release
+* setting files of docker environment
 
 
 ## Installation on Local
+####[Release]
 ```
-[Release]
-$ ./docker2/create_containers.sh
- or
-[Development]
-$ cd ./docker;./docker-create.sh
+$ docker-compose -f docker-compose-from-image.yml build
+$ docker-compose -f docker-compose-from-image.yml up
 ```
+
+####[Development]
+```
+$ docker-compose build
+$ docker-comppose up
+```
+
 
 ## docker environment
 | Container            | Explain                 | Port       |

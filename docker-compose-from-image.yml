@@ -1,19 +1,23 @@
-#docker-compose.yml
-version: '2'
+version: '3.0'
+
+volumes:
+  db: {}
+
 services:
   # MySQL
   mysql:
     image: hirokiy/question-mysql:1.0
     container_name: question-mysql
     ports:
-      - "4306:3306"
+      - "${MYSQL_PORT:-4306}:3306"
     restart: always
-  # golang:api-server
+
+  # Golang:api-server
   api:
     image: hirokiy/question-api:1.0
     container_name: question-api
     ports:
-      - "8083:8083"
+      - "${API_PORT:-8083}:8083"
     links:
       - mysql:mysql-server
     depends_on:
@@ -21,33 +25,36 @@ services:
     stdin_open: true
     tty: true
     restart: always
-    command: bash
-  # nodejs:backoffice-server
+    command: questionnaires -docker 1
+
+  # Nodejs:backoffice-server
   back-office:
     image: hirokiy/question-back:1.0
     container_name: question-backoffice
     ports:
-      - "8082:8082"
+      - "${BACK_PORT:-8082}:8082"
     stdin_open: true
     tty: true
     restart: always
-    command: bash
-  # nodejs:frontoffice-server
+    command: node ./app/server.js
+
+  # Nodejs:frontoffice-server
   front-office:
     image: hirokiy/question-front
     container_name: question-frontoffice
     ports:
-      - "8081:8081"
+      - "${FRONT_PORT:-8081}:8081"
     stdin_open: true
     tty: true
     restart: always
-    command: bash
+    command: node ./app/server.js
+
   # Nginx
   nginx:
     image: hirokiy/question-nginx:1.0
     container_name: question-nginx
     ports:
-      - "8080:80"
+      - "${NGINX_PORT:-8080}:80"
     links:
       - api:api-server
       - back-office:back-server
