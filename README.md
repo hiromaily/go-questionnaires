@@ -9,6 +9,13 @@ questionnaires services.
 This project was developed as company's assessment within 3 days when I applied for there.
 
 
+## On Heroku
+This site can be checked on Heroku.  
+[For Client](https://go-questionnaires.herokuapp.com/)  
+[For Admin](https://go-questionnaires.herokuapp.com/admin/)
+
+
+
 ## Directory composition
 ### 1.api
 * For api server created by Golang
