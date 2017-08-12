@@ -73,11 +73,11 @@ func main() {
 	//URL for JSON API
 	setURL(router)
 
-	lg.Debug(*docker)
+	lg.Debugf("docker flg is %d", *docker)
 
 	//Run
 	if *docker == 1 {
-		lg.Warn("running on fcgi mode.")
+		lg.Info("running on fcgi mode.")
 		fcgi.Run(router, fmt.Sprintf(":%d", serverPort))
 	} else {
 		router.Run(fmt.Sprintf(":%d", serverPort))
