@@ -1,11 +1,12 @@
 FROM node:6.6
 
-RUN mkdir -p /usr/src/front-office
+RUN mkdir -p /usr/src/back-office
 RUN mkdir /var/log/questionnaire/
 
 #COPY docker-entrypoint.sh /docker-entrypoint.sh
 
-WORKDIR /usr/src/front-office
+WORKDIR /usr/src/back-office
+COPY . .
 
-EXPOSE 8081
+EXPOSE 8082
 CMD ["node", "./app/server.js"]

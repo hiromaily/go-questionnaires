@@ -34,12 +34,12 @@ services:
     depends_on:
       - mysql
     restart: always
-    command: questionnaires -docker 1
+    command: /go/bin/questionnaires -docker 1
 
   # Nodejs:backoffice-server
   back-office:
     build:
-      context: ./docker/backoffice/
+      context: ./back-office/
     image: node-question-backoffice:1.0
     container_name: question-backoffice
     ports:
@@ -50,7 +50,7 @@ services:
   # Nodejs:frontoffice-server
   front-office:
     build:
-      context: ./docker/frontoffice/
+      context: ./front-office/
     image: node-question-frontoffice:1.0
     container_name: question-frontoffice
     ports:

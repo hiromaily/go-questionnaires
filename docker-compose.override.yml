@@ -11,9 +11,9 @@ services:
     volumes:
       #- ./api:/go/src/github.com/hiromaily/go-questionnaires/api
       - ./api/cmd:/go/src/github.com/hiromaily/go-questionnaires/api/cmd
-      - ./controllers/cmd:/go/src/github.com/hiromaily/go-questionnaires/api/controllers
-      - ./libs/cmd:/go/src/github.com/hiromaily/go-questionnaires/api/libs
-      - ./models/cmd:/go/src/github.com/hiromaily/go-questionnaires/api/models
+      - ./api/controllers:/go/src/github.com/hiromaily/go-questionnaires/api/controllers
+      - ./api/libs:/go/src/github.com/hiromaily/go-questionnaires/api/libs
+      - ./api/models:/go/src/github.com/hiromaily/go-questionnaires/api/models
     stdin_open: true
     tty: true
     command: fresh -c /go/src/github.com/hiromaily/go-questionnaires/api/runner.conf

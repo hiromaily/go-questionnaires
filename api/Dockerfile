@@ -15,7 +15,7 @@ COPY . .
 
 RUN go get -u github.com/tools/godep && go get -u github.com/hiromaily/fresh
 #RUN go get -d -v -u ./cmd/api-server/
-RUN CGO_ENABLED=0 GOOS=linux go build -o /go/bin/go-questionnaires ./cmd/api-server/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o /go/bin/questionnaires ./cmd/api-server/main.go
 
 EXPOSE 8083
 CMD ["/go/bin/questionnaires", "-docker", "1"]

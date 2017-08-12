@@ -26,7 +26,8 @@ This project was developed as company's assessment within 3 days when I applied 
 ## Installation on Local
 ####[Release]
 ```
-$ docker-compose -f docker-compose-from-image.yml build
+$ make ecsbld
+$ make ecs_push_image
 $ docker-compose -f docker-compose-from-image.yml up
 ```
 
