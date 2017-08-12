@@ -14,7 +14,9 @@ mkdir -p /var/log/go/
 
 
 WORKDIR /go/src/github.com/hiromaily/go-questionnaires/api
-COPY . .
+# Left base path is where command run when executing from Makefile or command (not docker-compose.yml).
+# In this case, it's not Docker file path.
+COPY ./api/ .
 
 RUN go get -u github.com/tools/godep && go get -u github.com/hiromaily/fresh
 RUN CGO_ENABLED=0 GOOS=linux go build -o /go/bin/questionnaires ./cmd/api-server/main.go

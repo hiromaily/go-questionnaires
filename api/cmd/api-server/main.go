@@ -8,6 +8,8 @@ import (
 	"github.com/hiromaily/go-questionnaires/api/libs/fcgi"
 	"github.com/hiromaily/golibs/db/mysql"
 	lg "github.com/hiromaily/golibs/log"
+	u "github.com/hiromaily/golibs/utils"
+	"os"
 	"time"
 )
 
@@ -22,6 +24,7 @@ var (
 )
 
 var (
+	portNum    = flag.Int("port", 8083, "Port of server")
 	heroku     = flag.Int("heroku", 0, "0:no Heroku, 1:Heroku")
 	retryCount = flag.Int("rc", 5, "retry count before starting")
 )
@@ -44,9 +47,14 @@ func setURL(r *gin.Engine) {
 func setStatic(r *gin.Engine) {
 	rootPath := "/go/src/github.com/hiromaily/go-questionnaires/api"
 
+	r.LoadHTMLGlob(rootPath + "/public/*.html")
+	r.GET("/", con.GetIndexAction)
+	r.GET("/index.html", con.GetIndexAction)
+
 	//r.Static("/favicon.ico", rootPath+"/statics/favicon.ico")
-	r.Static("/", rootPath+"/public/index.html")
-	r.Static("/admin/", rootPath+"/public/admin/index.html")
+	//r.Static("/", rootPath+"/public/")
+	//r.Static("/", rootPath+"/public/index.html")
+	r.Static("/admin", rootPath+"/public/admin")
 	r.Static("/js", rootPath+"/public/js")
 	r.Static("/css", rootPath+"/public/css")
 }
@@ -55,6 +63,10 @@ func setStatic(r *gin.Engine) {
 func setupDB() {
 	if *retryCount == 0 {
 		*retryCount = 1
+	}
+
+	if *heroku == 1 {
+		dbHost = "localhost"
 	}
 
 	var err error
@@ -80,6 +92,13 @@ func init() {
 	lg.InitializeLog(lg.DebugStatus, lg.LogOff, 99,
 		"[Questionnaire]", logPath)
 
+	//port
+	if os.Getenv("PORT") != "" {
+		*portNum = u.Atoi(os.Getenv("PORT"))
+	}
+	serverPort = *portNum
+	lg.Infof("exported Port is %d", serverPort)
+
 	//Database
 	setupDB()
 }
@@ -94,7 +113,7 @@ func main() {
 	//Run
 	if *heroku == 1 {
 		lg.Info("heroku mode")
-		//statuc
+		//static
 		setStatic(router)
 
 		//for localhost running

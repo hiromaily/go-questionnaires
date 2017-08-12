@@ -66,11 +66,21 @@ deploy_static:
 	rm -f ./api/public/admin/tmp.html
 
 heroku_build_base:
-	docker build --no-cache -t hirokiy/qre_base:latest -f ./docker/Dockerfile.base.heroku .
+	docker build -t hirokiy/qre_base:latest -f ./docker/Dockerfile.base.heroku .
+	#docker build --no-cache -t hirokiy/qre_base:latest -f ./docker/Dockerfile.base.heroku .
 	docker push hirokiy/qre_base:latest
 
 heroku_build:
-	docker build --no-cache -t hirokiy/qrepack:latest -f ./api/Dockerfile.heroku .
+	docker build -t hirokiy/qrepack:latest -f ./api/Dockerfile.heroku .
+	#docker build --no-cache -t hirokiy/qrepack:latest -f ./api/Dockerfile.heroku .
+
+heroku_bldfull: heroku_build_base heroku_build
+
+heroku_exec:
+	docker run -p 8080:8083 --name qrepack hirokiy/qrepack:latest
+
+heroku_stop:
+	docker stop qrepack
 
 
 ###############################################################################

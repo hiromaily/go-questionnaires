@@ -13,7 +13,7 @@ ENV MYSQL_USER=hiromaily
 ENV MYSQL_PASSWORD=12345678
 
 VOLUME /var/lib/mysql
-EXPOSE 3306
+#EXPOSE 3306
 
 
 
@@ -35,6 +35,8 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 ENV GOLANG_VERSION 1.8.3
 
 # Golang
+# Left base path is where command run when executing from Makefile or command (not docker-compose.yml).
+# In this case, it's not Docker file path.
 COPY ./docker/golang/go1.8.3.linux-amd64.tar.gz /tmp
 WORKDIR /tmp
 RUN tar xvf go1.8.3.linux-amd64.tar.gz && mv go /usr/local
