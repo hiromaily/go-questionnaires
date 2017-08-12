@@ -206,4 +206,4 @@ nohup "$@" &
 
 sleep 10s
 
-/go/bin/go-goa -f /go/src/github.com/hiromaily/go-goa/resources/tomls/heroku.toml
+/go/bin/questionnaires -heroku 1

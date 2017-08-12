@@ -41,9 +41,19 @@ func setURL(r *gin.Engine) {
 	r.POST("/api/answer/:id", con.PostAnswerAction)
 }
 
+func setStatic(r *gin.Engine) {
+	rootPath := "/go/src/github.com/hiromaily/go-questionnaires/api"
+
+	//r.Static("/favicon.ico", rootPath+"/statics/favicon.ico")
+	r.Static("/", rootPath+"/public/index.html")
+	r.Static("/admin/", rootPath+"/public/admin/index.html")
+	r.Static("/js", rootPath+"/public/js")
+	r.Static("/css", rootPath+"/public/css")
+}
+
 // settings for mysql
 func setupDB() {
-	if *retryCount == 0{
+	if *retryCount == 0 {
 		*retryCount = 1
 	}
 
@@ -70,11 +80,6 @@ func init() {
 	lg.InitializeLog(lg.DebugStatus, lg.LogOff, 99,
 		"[Questionnaire]", logPath)
 
-	//Heroku Settings
-	if *heroku == 1 {
-		lg.Info("heroku mode")
-	}
-
 	//Database
 	setupDB()
 }
@@ -89,9 +94,12 @@ func main() {
 	//Run
 	if *heroku == 1 {
 		lg.Info("heroku mode")
+		//statuc
+		setStatic(router)
+
 		//for localhost running
 		router.Run(fmt.Sprintf(":%d", serverPort))
-	}else{
+	} else {
 		lg.Info("running on fcgi mode.")
 		fcgi.Run(router, fmt.Sprintf(":%d", serverPort))
 	}
