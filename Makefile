@@ -26,10 +26,10 @@ dcup:
 # Local
 ###############################################################################
 bld:
-	go build -i -v -o ${GOPATH}/bin/apiserver ./api/cmd/api-server/
+	go build -i race -v -o ${GOPATH}/bin/apiserver ./api/cmd/api-server/
 
 run:
-	go run ./cmd/api-server/main.go -docker 0
+	go run -race ./cmd/api-server/main.go -docker 0
 
 
 ###############################################################################
